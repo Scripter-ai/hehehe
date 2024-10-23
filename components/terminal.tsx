@@ -170,6 +170,7 @@ export default function Terminal() {
       className="w-screen h-screen bg-black text-white font-mono p-4 flex flex-col"
       onClick={() => inputRef.current?.focus()} // Focus input when clicking on terminal
     >
+      {isLoading && <div className="text-yellow-500">Loading...</div>}
       {/* Terminal Output */}
       <div
         className="flex-grow overflow-y-auto mb-4"
