@@ -79,13 +79,13 @@ export async function runCommand(input: string): Promise<CommandResponse> {
 
     // Placeholder for other commands
     case 'ca':
-      return { output: ['Command `ca` is not yet implemented.'] };
+      return { output: [''] };
 
     case 'twitter':
       return { output: ['https://x.com/elonmusk'] };
 
     case 'website':
-      return { output: ['Command `website` is not yet implemented.'] };
+      return { output: ['https://www.heehhehe.online'] };
 
     default:
       return { output: [`Command not found: ${command}`] };
