@@ -25,7 +25,7 @@ export async function runCommand(input: string): Promise<CommandResponse> {
         return { output: ['Please provide a Twitter handle. Example: roast @twitterusername'] };
       } else if (args[0]?.startsWith('@')) {
         const twitterHandle = args[0];
-        const roastMessage = `Ah, ${twitterHandle}, let me guess, you're trading memecoins like they're Pokémon cards!`;
+        const roastMessage = `use roast not Roast......`;
 
         // Store the generated roast in localStorage
         saveRoastToLocalStorage(twitterHandle, roastMessage);
