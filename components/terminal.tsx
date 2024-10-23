@@ -24,8 +24,11 @@ const saveOutputToLocalStorage = (output: OutputMessage[]) => {
 
 // Helper function to load terminal output from localStorage
 const loadOutputFromLocalStorage = (): OutputMessage[] => {
-  const savedOutput = localStorage.getItem('terminalOutput');
-  return savedOutput ? JSON.parse(savedOutput) : [];
+  if (typeof window !== 'undefined') {
+    const savedOutput = localStorage.getItem('terminalOutput');
+    return savedOutput ? JSON.parse(savedOutput) : [];
+  }
+  return [];
 };
 
 // Helper function to clear terminal output from localStorage
