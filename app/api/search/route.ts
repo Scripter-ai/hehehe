@@ -12,14 +12,15 @@ if (!googleApiKey || !googleCx) {
   throw new Error("GOOGLE_API_KEY or GOOGLE_CX is not set in environment variables");
 }
 
-async function performGoogleSearch(twitterHandle: string) {
+async function performGoogleSearch(twitterHandle: string): Promise<string> {
   const response = await fetch(
     `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(twitterHandle)}&key=${googleApiKey}&cx=${googleCx}`
   );
   const data = await response.json();
 
   if (data.items && data.items.length > 0) {
-    return data.items.map((item: any) => `${item.title}\n${item.snippet}\n${item.link}`).join("\n\n");
+    return data.items.map((item: { title: string, snippet: string, link: string }) => 
+      `${item.title}\n${item.snippet}\n${item.link}`).join("\n\n");
   }
 
   return "No relevant search results found.";
