@@ -44,7 +44,7 @@ export default function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Use the useChat hook to handle the chat interaction
-  const { input, setInput, handleSubmit, messages } = useChat({
+  const { setInput, handleSubmit } = useChat({
     api: '/api/search',
     onFinish: (message: Message) => {
       setIsLoading(false); // Stop loading once response is finished
@@ -57,7 +57,7 @@ export default function Terminal() {
 
       const newOutput: OutputMessage[] = [
         ...output,
-        { content: `✔️ ${roastMessage}`, type: 'roast' as 'roast' }, // Ensure type is 'roast'
+        { content: `✔️ ${roastMessage}`, type: 'roast' as const }, // Ensure type is 'roast'
       ];
       setOutput(newOutput);
       saveOutputToLocalStorage(newOutput); // Save to localStorage
@@ -68,7 +68,7 @@ export default function Terminal() {
       console.error('Chat error:', error);
       const newOutput: OutputMessage[] = [
         ...output,
-        { content: `❌ Error: ${error.message}`, type: 'error' as 'error' }, // Ensure type is 'error'
+        { content: `❌ Error: ${error.message}`, type: 'error' as const }, // Ensure type is 'error'
       ];
       setOutput(newOutput);
       saveOutputToLocalStorage(newOutput); // Save to localStorage
@@ -113,7 +113,7 @@ export default function Terminal() {
       // Display the user's message in the output (normal white command)
       const newOutput: OutputMessage[] = [
         ...output,
-        { content: `> ${commandString}`, type: 'normal' as 'normal' }, // Ensure type is 'normal'
+        { content: `> ${commandString}`, type: 'normal' as const }, // Ensure type is 'normal'
       ];
       setOutput(newOutput);
       saveOutputToLocalStorage(newOutput); // Save to localStorage
@@ -132,14 +132,14 @@ export default function Terminal() {
           setIsLoading(true);
           const loadingMessage: OutputMessage[] = [
             ...newOutput,
-            { content: "Peter Griffin is roasting... He’s not that fast because he’s fat.", type: 'loading' as 'loading' }, // Explicitly cast type to 'loading'
+            { content: "Peter Griffin is roasting... He’s not that fast because he’s fat.", type: 'loading' as const }, // Explicitly cast type to 'loading'
           ];
           setOutput(loadingMessage);
           saveOutputToLocalStorage(loadingMessage); // Save to localStorage
         } else {
           const errorOutput: OutputMessage[] = [
             ...newOutput,
-            { content: 'No Twitter username provided. Please try again with roast @twitterhandle.', type: 'error' as 'error' }, // Ensure type is 'error'
+            { content: 'No Twitter username provided. Please try again with roast @twitterhandle.', type: 'error' as const }, // Ensure type is 'error'
           ];
           setOutput(errorOutput);
           saveOutputToLocalStorage(errorOutput); // Save to localStorage
@@ -153,7 +153,7 @@ export default function Terminal() {
           ...newOutput,
           ...result.output.map((line) => ({
             content: line,
-            type: 'normal' as 'normal', // Explicitly cast type to 'normal'
+            type: 'normal' as const, // Explicitly cast type to 'normal'
           })),
         ];
         setOutput(commandOutput);
