@@ -79,6 +79,7 @@ export async function runCommand(input: string): Promise<CommandResponse> {
         output: [
           'Available commands:',
           'help - Show this list of commands',
+          'clean - cleans the terminal',
           'ca - The CA from pump',
           'pump - The link to official pump.fun',
           'twitter - Elon Musk his twitter',

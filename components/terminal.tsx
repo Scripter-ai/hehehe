@@ -213,7 +213,7 @@ export default function Terminal() {
 
       {/* Hint */}
       <div className="mb-2 text-gray-400 text-sm">
-        hint: &apos;help&apos;
+        hint: &apos;help&apos; - clean (to clean terminal)
       </div>
 
       {/* Terminal Input Display */}
