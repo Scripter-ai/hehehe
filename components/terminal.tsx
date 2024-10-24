@@ -46,6 +46,11 @@ export default function Terminal() {
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Scroll to bottom whenever output changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [output]); // This useEffect triggers scrollToBottom() when output changes
+
   // Use the useChat hook to handle the chat interaction
   const { setInput, handleSubmit } = useChat({
     api: '/api/search',
@@ -64,7 +69,6 @@ export default function Terminal() {
       ];
       setOutput(newOutput);
       saveOutputToLocalStorage(newOutput); // Save to localStorage
-      scrollToBottom();
     },
     onError: (error: Error) => {
       setIsLoading(false); // Stop loading on error
@@ -75,7 +79,6 @@ export default function Terminal() {
       ];
       setOutput(newOutput);
       saveOutputToLocalStorage(newOutput); // Save to localStorage
-      scrollToBottom();
     },
   });
 
@@ -102,7 +105,6 @@ export default function Terminal() {
     }
   }, [submittedHandle, handleSubmit]);
 
-  // Scroll to bottom whenever output changes
   const scrollToBottom = () => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
@@ -164,20 +166,19 @@ export default function Terminal() {
       }
 
       setCommand(''); // Clear the command input
-      scrollToBottom(); // Ensure the terminal stays scrolled to bottom
     }
   };
 
   return (
     <div
-      className="w-screen h-screen bg-black text-white font-mono p-4 flex flex-col"
-      onClick={() => inputRef.current?.focus()} // Focus input when clicking on terminal
+      className="w-screen h-[100dvh] bg-black text-white font-mono p-4 flex flex-col"
+      onClick={() => inputRef.current?.focus()}
     >
       {isLoading && <div className="text-yellow-500">Loading...</div>}
       {/* Terminal Output */}
       <div
         className="flex-grow overflow-y-auto mb-4"
-        ref={terminalRef} // Ref for the terminal output
+        ref={terminalRef}
       >
         {output.map((line, index) => (
           <div
@@ -197,6 +198,11 @@ export default function Terminal() {
         ))}
       </div>
 
+      {/* Hint */}
+      <div className="mb-2 text-gray-400 text-sm">
+        hint: 'help'
+      </div>
+
       {/* Terminal Input Display */}
       <div className="flex items-center">
         <span className="text-white">peter-griffin@linux</span>
@@ -213,7 +219,7 @@ export default function Terminal() {
           type="text"
           className="absolute opacity-0 h-0 w-0"
           value={command}
-          onChange={(e) => setCommand(e.target.value)}
+          onChange={(e) => setCommand(e.target.value.toLowerCase())}
           onKeyDown={handleKeyDown}
           autoFocus
           autoComplete="off"

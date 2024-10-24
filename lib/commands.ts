@@ -68,10 +68,11 @@ export async function runCommand(input: string): Promise<CommandResponse> {
         output: [
           'Available commands:',
           'help - Show this list of commands',
-          'ca - Command description for ca',
-          'twitter - Command description for twitter',
-          'website - Command description for website',
-          'dex - Command description for dex',
+          'ca - The CA from pump',
+          'pump - The link to official pump.fun',
+          'twitter - Elon Musk his twitter',
+          'website - The website you are on',
+          'dex - Dexscreener.com',
           'roast @<twitterusername> - Roast a Twitter profile',
           'share @<twitterusername> - Share the roast on Twitter'
         ]
@@ -79,7 +80,13 @@ export async function runCommand(input: string): Promise<CommandResponse> {
 
     // Placeholder for other commands
     case 'ca':
-      return { output: [''] };
+      return { output: ['DdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump'] };
+    
+    case 'pump':
+      return { output: ['https://pump.fun/DdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump'] };
+    
+    case 'dex':
+      return { output: ['Coming soon'] };
 
     case 'twitter':
       return { output: ['https://x.com/elonmusk'] };
