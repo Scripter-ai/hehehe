@@ -200,7 +200,7 @@ export default function Terminal() {
 
       {/* Hint */}
       <div className="mb-2 text-gray-400 text-sm">
-        hint: 'help'
+        hint: &apos;help&apos;
       </div>
 
       {/* Terminal Input Display */}
