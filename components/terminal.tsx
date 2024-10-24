@@ -45,7 +45,8 @@ export default function Terminal() {
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const fartAudioRef = useRef<HTMLAudioElement>(null); // Ref for the fart sound
+  const fartAudioRef = useRef<HTMLAudioElement>(null);
+  const cantAudioRef = useRef<HTMLAudioElement>(null);
 
   // Scroll to bottom whenever output changes
   useEffect(() => {
@@ -150,7 +151,7 @@ export default function Terminal() {
           setOutput(errorOutput);
           saveOutputToLocalStorage(errorOutput); // Save to localStorage
         }
-      } 
+      }
       // Handle 'fart' command
       else if (commandString === 'fart') {
         if (fartAudioRef.current) {
@@ -162,6 +163,18 @@ export default function Terminal() {
         ];
         setOutput(fartOutput);
         saveOutputToLocalStorage(fartOutput); // Save to localStorage
+      }
+      // Handle 'cant' command
+      else if (commandString === 'cant') {
+        if (cantAudioRef.current) {
+          cantAudioRef.current.play(); // Play the "Can't Touch This" sound
+        }
+        const cantOutput: OutputMessage[] = [
+          ...newOutput,
+          { content: '🕺 Peter Griffin says you can’t touch this...', type: 'normal' as const },
+        ];
+        setOutput(cantOutput);
+        saveOutputToLocalStorage(cantOutput); // Save to localStorage
       }
       // For any other command, use runCommand
       else {
@@ -239,8 +252,9 @@ export default function Terminal() {
         />
       </div>
 
-      {/* Audio element for the fart sound */}
+      {/* Audio elements for the fart and "Can't Touch This" sounds */}
       <audio ref={fartAudioRef} src="/fart.mp3" />
+      <audio ref={cantAudioRef} src="/canttouchthis.mp3" />
     </div>
   );
 }

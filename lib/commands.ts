@@ -91,6 +91,7 @@ export async function runCommand(input: string): Promise<CommandResponse> {
           'fact - The facts of Peter Griffin',
           'wisdom - Get a random piece of Peter Griffin wisdom',
           'fart - Ah yes........... sound on',
+          'mooning - Cant touch this........... sound on',
         ]
       };
 
@@ -126,6 +127,9 @@ export async function runCommand(input: string): Promise<CommandResponse> {
     
     case 'fart':
       return { output: ['💨 Peter Griffin is farting... sound on'] };
+
+    case 'mooning':
+      return { output: ['💨 Cant touch this... sound on'] };
 
     default:
       return { output: [`Command not found: ${command}`] };
