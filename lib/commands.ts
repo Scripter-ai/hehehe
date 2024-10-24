@@ -46,34 +46,44 @@ export async function runCommand(input: string): Promise<CommandResponse> {
         return { output: ['Invalid format. Use: roast @<twitterhandle>'] };
       }
 
-    case 'share':
-      if (args.length === 0 || !args[0].startsWith('@')) {
-        // No Twitter handle provided, ask the user to provide one
-        return { output: ['Please provide a Twitter handle to share. Example: share @twitterusername'] };
-      }
-
-      const twitterHandle = args[0];
-      const storedRoast = getRoastFromLocalStorage(twitterHandle);
-
-      if (!storedRoast) {
-        // If no roast was found for the provided handle
-        return { output: [`No roast available for ${twitterHandle}. Please roast a Twitter profile first using the roast command.`] };
-      }
-
-      const tweetText = `#GRIFFINAI\n\nRoasting ${twitterHandle} with Peter Griffin's AI roast! 🔥\n\n${storedRoast}\n\nDdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump`;
-
-      // Log the tweetText and URL for debugging
-      console.log('Tweet Text:', tweetText);
-
-      // Open Twitter's compose page with the pre-filled tweet text
-      const url = `https://x.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-
-      console.log('Opening URL:', url); // Log the URL to ensure it's correct
-      window.open(url, '_blank');
-
-      return { output: [`Opening Twitter to share roast for ${twitterHandle}...`] };
-
-    case 'help':
+      case 'share':
+        // Check if a Twitter handle is provided
+        if (args.length === 0 || !args[0].startsWith('@')) {
+          return { output: ['Please provide a Twitter handle to share. Example: share @twitterusername'] };
+        }
+  
+        const twitterHandle = args[0];
+        const storedRoast = getRoastFromLocalStorage(twitterHandle);
+  
+        if (!storedRoast) {
+          return { output: [`No roast available for ${twitterHandle}. Please roast a Twitter profile first using the roast command.`] };
+        }
+  
+        const tweetText = `#GRIFFINAI\n\nRoasting ${twitterHandle} with Peter Griffin's AI roast! 🔥\n\n${storedRoast}\n\nDdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump`;
+  
+        // Call your API to post the tweet
+        try {
+          const response = await fetch('/api/v1/x', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ roastMessage: tweetText }), 
+          });
+  
+          const data = await response.json();
+  
+          if (data.success && data.tweetUrl) {
+            return { output: [`Tweet posted successfully! Check it out here: ${makeUrlClickable(data.tweetUrl)}`] };
+          } else {
+            return { output: ['Failed to post the tweet. Please try again.'] };
+          }
+        } catch (error) {
+          console.error('Error posting tweet:', error);
+          return { output: ['Error occurred while posting the tweet.'] };
+        }
+  
+      case 'help':
       // Return the list of available commands
       return {
         output: [
