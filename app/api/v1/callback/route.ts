@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fetch from 'node-fetch';
-import crypto from 'crypto';
 
 const clientId = process.env.PAID_TWITTER_CLIENT_ID as string;
 const clientSecret = process.env.PAID_TWITTER_CLIENT_SECRET as string;
