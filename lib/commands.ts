@@ -60,7 +60,7 @@ export async function runCommand(input: string): Promise<CommandResponse> {
         return { output: [`No roast available for ${twitterHandle}. Please roast a Twitter profile first using the roast command.`] };
       }
 
-      const tweetText = `#GRIFFINAI\n\nRoasting ${twitterHandle} with Peter Griffin's AI roast! 🔥\n\n${storedRoast}`;
+      const tweetText = `#GRIFFINAI\n\nRoasting ${twitterHandle} with Peter Griffin's AI roast! 🔥\n\n${storedRoast}\n\nDdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump`;
 
       // Log the tweetText and URL for debugging
       console.log('Tweet Text:', tweetText);

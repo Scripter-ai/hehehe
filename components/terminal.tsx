@@ -254,7 +254,7 @@ export default function Terminal() {
 
       {/* Audio elements for the fart and "Can't Touch This" sounds */}
       <audio ref={fartAudioRef} src="/fart.mp3" />
-      <audio ref={cantAudioRef} src="/canttouchthis.mp3" />
+      <audio ref={cantAudioRef} src="/canttouchme.mp3" />
     </div>
   );
 }
