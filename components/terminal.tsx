@@ -45,6 +45,7 @@ export default function Terminal() {
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const fartAudioRef = useRef<HTMLAudioElement>(null); // Ref for the fart sound
 
   // Scroll to bottom whenever output changes
   useEffect(() => {
@@ -150,6 +151,18 @@ export default function Terminal() {
           saveOutputToLocalStorage(errorOutput); // Save to localStorage
         }
       } 
+      // Handle 'fart' command
+      else if (commandString === 'fart') {
+        if (fartAudioRef.current) {
+          fartAudioRef.current.play(); // Play the fart sound
+        }
+        const fartOutput: OutputMessage[] = [
+          ...newOutput,
+          { content: '💨 Peter Griffin is farting... sound on', type: 'normal' as const },
+        ];
+        setOutput(fartOutput);
+        saveOutputToLocalStorage(fartOutput); // Save to localStorage
+      }
       // For any other command, use runCommand
       else {
         const result = await runCommand(commandString);
@@ -225,6 +238,9 @@ export default function Terminal() {
           autoComplete="off"
         />
       </div>
+
+      {/* Audio element for the fart sound */}
+      <audio ref={fartAudioRef} src="/fart.mp3" />
     </div>
   );
 }

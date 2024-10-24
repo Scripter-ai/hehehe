@@ -1,4 +1,7 @@
 import { CommandResponse } from '@/types';
+import { insults } from '@/content/insults'; 
+import { facts } from '@/content/facts'; 
+import { wisdom } from '@/content/wisdom';
 
 // Helper function to store a roast in localStorage
 function saveRoastToLocalStorage(twitterHandle: string, roast: string) {
@@ -12,6 +15,14 @@ function getRoastFromLocalStorage(twitterHandle: string): string | null {
   const storedRoasts = JSON.parse(localStorage.getItem('roasts') || '{}');
   return storedRoasts[twitterHandle] || null;
 }
+
+// Helper function to format URLs as clickable links
+const makeUrlClickable = (url: string) => {
+  return `<a href="${url}" target="_blank" class="text-blue-500 underline">${url}</a>`;
+};
+
+// Helper function to get a random item from an array
+const getRandomItem = (array: string[]) => array[Math.floor(Math.random() * array.length)];
 
 export async function runCommand(input: string): Promise<CommandResponse> {
   const [command, ...args] = input.split(' ');
@@ -74,25 +85,46 @@ export async function runCommand(input: string): Promise<CommandResponse> {
           'website - The website you are on',
           'dex - Dexscreener.com',
           'roast @<twitterusername> - Roast a Twitter profile',
-          'share @<twitterusername> - Share the roast on Twitter'
+          'share @<twitterusername> - Share the roast on Twitter',
+          'insult - Let me insult you',
+          'fact - The facts of Peter Griffin',
+          'wisdom - Get a random piece of Peter Griffin wisdom',
+          'fart - Ah yes........... sound on',
         ]
       };
 
-    // Placeholder for other commands
     case 'ca':
       return { output: ['DdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump'] };
     
     case 'pump':
-      return { output: ['https://pump.fun/DdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump'] };
+      // Make the URL clickable using makeUrlClickable
+      return { output: [makeUrlClickable('https://pump.fun/DdrdT2BKsh3xgXYGvKkVs4ahqG99dQJsMgXfadCQpump')] };
     
     case 'dex':
       return { output: ['Coming soon'] };
 
     case 'twitter':
-      return { output: ['https://x.com/elonmusk'] };
+      // Make the URL clickable using makeUrlClickable
+      return { output: [makeUrlClickable('https://x.com/elonmusk')] };
 
     case 'website':
-      return { output: ['https://www.heehhehe.online'] };
+      // Make the URL clickable using makeUrlClickable
+      return { output: [makeUrlClickable('https://www.heehhehe.online')] };
+
+    case 'insult':
+      // Return a random insult
+      return { output: [getRandomItem(insults)] };
+
+    case 'fact':
+      // Return a random fact
+      return { output: [getRandomItem(facts)] };
+
+    case 'wisdom':
+      // Return a random piece of wisdom
+      return { output: [getRandomItem(wisdom)] };
+    
+    case 'fart':
+      return { output: ['💨 Peter Griffin is farting... sound on'] };
 
     default:
       return { output: [`Command not found: ${command}`] };
